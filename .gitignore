@@ -1,0 +1,5 @@
+.idea
+bin
+vendor
+php-git-hooks.yml
+composer.phar

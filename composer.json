@@ -1,0 +1,50 @@
+{
+    "name": "kanunak/money",
+    "license": "MIT",
+    "type": "project",
+    "description": "Money library",
+    "authors": [
+        {
+            "name": "Aitor Suso",
+            "email": "patxi1980@gmail.com"
+        }
+    ],
+    "support": {
+        "email": "patxi1980@gmail.com"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        },
+        "psr-4": {
+            "Kanunak\\": "src/"
+
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kanunak\\Test\\": "test/"
+        }
+    },
+    "require": {
+        "php": ">=5.4",
+        "jimmyoak/utilities": "2.3.*"
+    },
+    "require-dev": {
+        "bruli/php-git-hooks": "^2.0"
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "SymfonyStandard\\Composer::hookRootPackageInstall"
+        ],
+        "post-install-cmd": [
+            "PhpGitHooks\\Application\\Composer\\ConfiguratorScript::buildConfig"
+        ],
+        "post-update-cmd": [
+            "PhpGitHooks\\Application\\Composer\\ConfiguratorScript::buildConfig"
+        ]
+    },
+    "config": {
+        "bin-dir": "bin/"
+    }
+}
