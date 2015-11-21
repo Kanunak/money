@@ -21,7 +21,7 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function itShouldThorwInvalidArgumentExceptionWithAnInvalidCurrencyCode()
+    public function itShouldThrowInvalidArgumentExceptionWithAnInvalidCurrencyCode()
     {
         $currencyCode = 'XXX';
 
@@ -31,5 +31,27 @@ class CurrencyTest extends \PHPUnit_Framework_TestCase
         );
 
         new Currency($currencyCode);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldReturnTrueWhenTheCurrencyCodesAreEquals()
+    {
+        $currency = new Currency(Currency::CURRENCY_CODE_EURO);
+        $currencyToCompare = new Currency(Currency::CURRENCY_CODE_EURO);
+
+        $this->assertTrue($currency->equals($currencyToCompare));
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldReturnFalseWhenTheCurrencyCodesAreDifferent()
+    {
+        $currency = new Currency(Currency::CURRENCY_CODE_EURO);
+        $currencyToCompare = new Currency(Currency::CURRENCY_CODE_EURO);
+
+        $this->assertTrue($currency->equals($currencyToCompare));
     }
 }

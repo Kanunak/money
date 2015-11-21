@@ -38,6 +38,48 @@ class Money
     }
 
     /**
+     * @param Money $moneyToAdd
+     * @return Money
+     * @throw \InvalidArgumentException
+     */
+    public function add(Money $moneyToAdd)
+    {
+        if (!$this->isSameCurrency($moneyToAdd)) {
+            throw new \InvalidArgumentException('Currencies does not match');
+        }
+        return new Money($this->currency(), $this->value() + $moneyToAdd->value());
+    }
+
+    public function subtract(Money $moneyToSubtract)
+    {
+        if (!$this->isSameCurrency($moneyToSubtract)) {
+            throw new \InvalidArgumentException('Currencies does not match');
+        }
+        return new Money($this->currency(), $this->value() - $moneyToSubtract->value());
+    }
+
+    /**
+     * @param Money $moneyToCompare
+     * @return bool
+     */
+    public function equals(Money $moneyToCompare)
+    {
+        if ($this->isSameCurrency($moneyToCompare)) {
+            return $this->value() === $moneyToCompare->value();
+        }
+        return false;
+    }
+
+    /**
+     * @param Money $money
+     * @return bool
+     */
+    private function isSameCurrency(Money $money)
+    {
+        return ($this->currency()->equals($money->currency()));
+    }
+
+    /**
      * @param $value
      * @thrown \InvalidArgumentException
      */
