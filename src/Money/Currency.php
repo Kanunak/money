@@ -25,4 +25,12 @@ class Currency extends Enum
     {
         return $this->value();
     }
+
+    /**
+     * @return string[]
+     */
+    public static function availableCurrencyCodes()
+    {
+        return self::getConstList();
+    }
 }

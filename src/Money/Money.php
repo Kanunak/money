@@ -4,6 +4,8 @@ namespace Kanunak\Money;
 
 class Money
 {
+    const NUMBER_OF_DECIMALS = 4;
+
     /** @var  Currency */
     private $currency;
 
@@ -35,6 +37,14 @@ class Money
     public function value()
     {
         return $this->value;
+    }
+
+    /**
+     * @return int
+     */
+    public function decimals()
+    {
+        return self::NUMBER_OF_DECIMALS;
     }
 
     /**

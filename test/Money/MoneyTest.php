@@ -128,4 +128,13 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
 
         $money->subtract($moneyToSubtract);
     }
+
+    /**
+     * @test
+     */
+    public function itShouldReturnTheNumberOfDecimalsOfMoney()
+    {
+        $money = new Money(new Currency(Currency::CURRENCY_CODE_US_DOLLAR), 10000);
+        $this->assertEquals(4, $money->decimals());
+    }
 }
