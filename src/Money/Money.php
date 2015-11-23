@@ -60,6 +60,11 @@ class Money
         return new Money($this->currency(), $this->value() + $moneyToAdd->value());
     }
 
+    /**
+     * @param Money $moneyToSubtract
+     * @return Money
+     * @throw \InvalidArgumentException
+     */
     public function subtract(Money $moneyToSubtract)
     {
         if (!$this->isSameCurrency($moneyToSubtract)) {
@@ -71,6 +76,7 @@ class Money
     /**
      * @param Money $moneyToCompare
      * @return bool
+     * @throw \InvalidArgumentException
      */
     public function equals(Money $moneyToCompare)
     {
@@ -78,6 +84,28 @@ class Money
             return $this->value() === $moneyToCompare->value();
         }
         return false;
+    }
+
+    /**
+     * @param CurrencyPair $currencyPair
+     * @return Money
+     * @throw \InvalidArgumentException
+     */
+    public function exchange(CurrencyPair $currencyPair)
+    {
+        if (!$this->isSameCurrencyInCurrencyPair($currencyPair)) {
+            throw new \InvalidArgumentException('CurrencyFrom in the CurrencyPair does not match the money currency');
+        }
+        return new Money($currencyPair->currencyTo(), (int)($this->value() * $currencyPair->ratio()));
+    }
+
+    /**
+     * @param CurrencyPair $currencyPair
+     * @return bool
+     */
+    private function isSameCurrencyInCurrencyPair(CurrencyPair $currencyPair)
+    {
+        return ($this->currency()->equals($currencyPair->currencyFrom()));
     }
 
     /**

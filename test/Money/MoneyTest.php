@@ -3,6 +3,7 @@
 namespace Kanunak\test\Money;
 
 use Kanunak\Money\Currency;
+use Kanunak\Money\CurrencyPair;
 use Kanunak\Money\Money;
 
 class MoneyTest extends \PHPUnit_Framework_TestCase
@@ -136,5 +137,48 @@ class MoneyTest extends \PHPUnit_Framework_TestCase
     {
         $money = new Money(new Currency(Currency::CURRENCY_CODE_US_DOLLAR), 10000);
         $this->assertEquals(4, $money->decimals());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldReturnAnExchangedMoneyWhenGivenACurrencyPair()
+    {
+        $moneyValue = 1000000;
+        $ratio = 1.069;
+        $expectedMoneyValue = 1069000;
+        $money = new Money(new Currency(Currency::CURRENCY_CODE_EURO), $moneyValue);
+        $currencyPair = new CurrencyPair(
+            new Currency(Currency::CURRENCY_CODE_EURO),
+            new Currency(Currency::CURRENCY_CODE_US_DOLLAR),
+            $ratio
+        );
+
+        $expectedMoney = new Money(new Currency(Currency::CURRENCY_CODE_US_DOLLAR), $expectedMoneyValue);
+
+        $this->assertEquals($expectedMoney, $money->exchange($currencyPair));
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldThrowInvalidArgumentExceptionWhenCurrencyFromDoesNotMatchMoneyCurrency()
+    {
+        $moneyValue = 1000000;
+        $ratio = 1.069;
+        $expectedMoneyValue = 1069000;
+        $money = new Money(new Currency(Currency::CURRENCY_CODE_EURO), $moneyValue);
+        $currencyPair = new CurrencyPair(
+            new Currency(Currency::CURRENCY_CODE_US_DOLLAR),
+            new Currency(Currency::CURRENCY_CODE_BRITISH_POUND),
+            $ratio
+        );
+
+        $this->setExpectedException(
+            '\InvalidArgumentException',
+            'CurrencyFrom in the CurrencyPair does not match the money currency'
+        );
+
+        $money->exchange($currencyPair);
     }
 }

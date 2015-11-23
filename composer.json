@@ -27,11 +27,11 @@
         }
     },
     "require": {
-        "php": ">=5.4",
+        "php": ">=5.5.0",
         "jimmyoak/utilities": "2.3.*"
     },
     "require-dev": {
-        "bruli/php-git-hooks": "^2.0"
+        "bruli/php-git-hooks": "2.3.*"
     },
     "scripts": {
         "post-root-package-install": [
